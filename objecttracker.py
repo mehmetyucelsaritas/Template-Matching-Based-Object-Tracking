@@ -31,8 +31,8 @@ class ObjectTracker:
         self.max_correlation = None
         self.correlation_threshold = threshold
         self.record = rec
-        self.interrupt_key = None  # it waits every 1ms an intetrupt from keyboard
-        self.pressed_key = None   # it waits every 1ms an comand from keyboard (next,back,roi,quit)
+        self.interrupt_key = None  # it waits every 1ms an interrupt from keyboard
+        self.pressed_key = None   # it waits every 1ms a command from keyboard (next,back,roi,quit)
 
     def create_tracker(self):
         """
@@ -42,7 +42,7 @@ class ObjectTracker:
         """
         if int(minor_ver) < 3:
             self.fish_tracker = cv.Tracker_create(self.tracker_type)
-            self.fish_tracker = cv.Tracker_create(self.tracker_type)
+            self.cage_tracker = cv.Tracker_create(self.tracker_type)
         else:
             if self.tracker_type == 'MIL':
                 self.fish_tracker = cv.TrackerMIL_create()
@@ -64,7 +64,7 @@ class ObjectTracker:
         """
         self.video = cv.VideoCapture(self.video_path)
 
-        print(f"Total Frame {int(self.video.get(cv.CAP_PROP_FRAME_COUNT))}")
+        print(f"Total Frame: {int(self.video.get(cv.CAP_PROP_FRAME_COUNT))}")
         # it allocates list as total number of video frame
         self.fish_position = [-1000 for _ in range(int(self.video.get(cv.CAP_PROP_FRAME_COUNT)))]
         self.cage_position = [-1000 for _ in range(int(self.video.get(cv.CAP_PROP_FRAME_COUNT)))]
@@ -135,7 +135,7 @@ class ObjectTracker:
             if self.max_correlation < self.correlation_threshold:
                 ok1 = False
 
-            # Re-creating fish tracker each time unsuccessful when detection or low correlation coefficient occur.
+            # Re-creating fish tracker each time when unsuccessful detection or low correlation coefficient occur.
             if not ok1:
                 cv.putText(self.current_frame, 'Tracking failure detected, re-create        template !', (20, 20),
                            cv.FONT_HERSHEY_SIMPLEX, 0.75, (68, 105, 255), 2)
@@ -335,10 +335,10 @@ class ObjectTracker:
         final_cropped_fish_signal = fish_arr_np[crop_time,] - np.mean(fish_arr_np[crop_time,])
 
         fig, (ax1) = plt.subplots(1, 1, figsize=(20, 10))
-        ax1.set(xlabel="Zaman", ylabel="Balık ve Tüp Koordinatları")
-        fig.suptitle("Takip Analizi", fontsize="xx-large")
-        ax1.plot(t, final_cropped_cage_signal, color="r", label="tüp", linewidth=1.5)
-        ax1.plot(t, final_cropped_fish_signal, color="b", label="balık", linewidth=1.5)
+        ax1.set(xlabel="Time", ylabel="Fish and Tube Coordinates")
+        fig.suptitle("Track Analysis", fontsize="xx-large")
+        ax1.plot(t, final_cropped_cage_signal, color="r", label="Refuge", linewidth=1.5)
+        ax1.plot(t, final_cropped_fish_signal, color="b", label="Fish", linewidth=1.5)
         ax1.legend()
         if self.DEBUG:
             fig.savefig(self.debug_path + '1_Time_Domain_cage_vs_fish.jpg')
@@ -406,7 +406,7 @@ class ObjectTracker:
 
         # Stops program if c pressed
         if self.interrupt_key == ord("p"):
-            print("c pressed")
+            print("p pressed")
             print('"r":select Roi, "n":next frame, "b":previous frame, "q":continue')
             flag = True
             while True:

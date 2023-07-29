@@ -12,7 +12,7 @@ from pathlib import Path
 # ----------------------------------------------------------------------------------
 # SINGLE FILE ANALYSIS PARAMETERS
 # ----------------------------------------------------------------------------------
-single_main_folder_name = "C:/Users/mehme/OneDrive/Masaüstü/KCF-CSRT/videos"
+single_main_folder_name = "./videos"
 conductivity = "low"                         # low | medium | high
 light_option = "light"                        # dark | dimlight | light
 cage_option = "14 cm window"                  # 7|14|21 cm nowindow | 7|14|21 cm window
