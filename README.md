@@ -8,6 +8,8 @@ This project uses the Template matching method to track objects.
 
 ****You can  [watch](https://youtu.be/ZMCFsfx7JNw) the demo of project.****
 
+See also [Object-Tracking-GUI](https://github.com/mehmetyucelsaritas/Object-Tracking-GUI) Project that mainly focus on deleting outlier data.
+
 **Basic Usage of Project :**
 
 1. Select Range Of Interests (ROIs) --> Press SPACE after each.
